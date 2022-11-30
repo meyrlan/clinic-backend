@@ -9,7 +9,7 @@ from django.utils.html import format_html
 class UserModelAdmin(admin.ModelAdmin):
     list_display = ("id", "phone", "birth_date")
     search_fields = ("id", "phone")
-    fields = ("phone", "birth_date")
+    fields = ("phone", "birth_date", "password")
 
 
 @admin.register(Patient)

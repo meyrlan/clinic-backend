@@ -54,7 +54,7 @@ class PatientCreateSerializer(serializers.ModelSerializer):
         if user:
             raise ValidationError({"error": f"User with phone {phone} already exists."})
 
-        user = User.objects.create(
+        user = User.objects.create_user(
             phone=phone,
             password=password,
             birth_date=birth_date,
