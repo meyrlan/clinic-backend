@@ -1,5 +1,5 @@
 """
-WSGI config for Eventter project.
+WSGI config for clinic project.
 
 It exposes the WSGI callable as a module-level variable named ``application``.
 """

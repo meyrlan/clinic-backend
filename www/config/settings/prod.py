@@ -1,5 +1,5 @@
 """
-Django production settings for eventter project.
+Django production settings for clinic project.
 """
 
 

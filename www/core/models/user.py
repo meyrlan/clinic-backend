@@ -6,16 +6,15 @@ from django.utils.translation import ugettext_lazy as _
 
 
 class CustomUserManager(BaseUserManager):
-    def create_user(self, email, password, **extra_fields):
-        if not email:
-            raise ValueError(_('Email field must be set'))
-        email = self.normalize_email(email)
-        user = self.model(email=email, **extra_fields)
+    def create_user(self, phone, password, **extra_fields):
+        if not phone:
+            raise ValueError(_('Phone field must be set'))
+        user = self.model(phone=phone, **extra_fields)
         user.set_password(password)
         user.save()
         return user
 
-    def create_superuser(self, email, password, **extra_fields):
+    def create_superuser(self, phone, password, **extra_fields):
         extra_fields.setdefault('is_staff', True)
         extra_fields.setdefault('is_superuser', True)
 
@@ -23,25 +22,34 @@ class CustomUserManager(BaseUserManager):
             raise ValueError(_('Superuser must have is_staff=True.'))
         if extra_fields.get('is_superuser') is not True:
             raise ValueError(_('Superuser must have is_superuser=True.'))
-        return self.create_user(email, password, **extra_fields)
+        return self.create_user(phone, password, **extra_fields)
 
 
 class User(AbstractBaseUser, PermissionsMixin):
-    email = models.EmailField(_("email address"), unique=True, max_length=256, db_index=True)
-    phone = PhoneNumberField(_("Phone Number"), region="KZ", blank=True)
+    phone = PhoneNumberField(_("Phone Number"), region="KZ", unique=True, db_index=True)
     password = models.CharField(_("Password"), max_length=256)
     birth_date = models.DateField(_("Birth Date"), null=True, blank=True)
     is_staff = models.BooleanField(_("Admin"), default=False)
 
-    USERNAME_FIELD = "email"
+    USERNAME_FIELD = "phone"
     REQUIRED_FIELD = ["password"]
+
+    def __str__(self):
+        return str(self.phone)
 
     objects = CustomUserManager()
 
-    def save(self, *args, **kwargs):
-        if isinstance(self.email, str):
-            if self.email:
-                self.email = self.email.lower()
-            else:
-                self.email = None
-        super().save(*args, **kwargs)
+    @property
+    def role(self):
+        if self.admin:
+            return "admin"
+        elif self.doctor:
+            return "doctor"
+        elif self.patient:
+            return "patient"
+        return None
+
+    class Meta:
+        db_table = "users"
+        verbose_name = _("User")
+        verbose_name_plural = _("Users")

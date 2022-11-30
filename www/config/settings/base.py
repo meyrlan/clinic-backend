@@ -1,4 +1,4 @@
-"""Django base settings for Eventter project."""
+"""Django base settings for clinic project."""
 
 import sys
 from datetime import timedelta
@@ -118,10 +118,10 @@ SPECTACULAR_SETTINGS = {
     "SERVE_INCLUDE_SCHEMA": False,
     "SERVE_PERMISSIONS": ["rest_framework.permissions.IsAuthenticated"],
     "SERVE_AUTHENTICATION": ["rest_framework.authentication.SessionAuthentication"],
-    "TITLE": "Eventter API",
+    "TITLE": "clinic API",
     "VERSION": "1.0.0",
     "SERVERS": [
-        {"url": "https://api.eventter.kz", "description": "Production server"},
+        {"url": "https://api.clinic.kz", "description": "Production server"},
         {"url": "http://127.0.0.1:8000", "description": "Development server"},
     ],
 }
@@ -185,12 +185,12 @@ USE_THOUSAND_SEPARATOR = True
 
 LOCALE_PATHS = ("locale",)
 
-DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-
-AWS_S3_ACCESS_KEY_ID = "AKIARGGZVRKKNGFTREE4"
-AWS_SECRET_ACCESS_KEY = "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"
-AWS_STORAGE_BUCKET_NAME = "eventterevents"
-AWS_QUERYSTRING_AUTH = False
+# DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+#
+# AWS_S3_ACCESS_KEY_ID = "AKIARGGZVRKKNGFTREE4"
+# AWS_SECRET_ACCESS_KEY = "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"
+# AWS_STORAGE_BUCKET_NAME = "clinicevents"
+# AWS_QUERYSTRING_AUTH = False
 
 # Logging config
 LOGGING = {
@@ -231,12 +231,12 @@ HERE = {}
 
 
 # --- Internal settings ---
-WEBSITE_ADDRESS = env("WEBSITE_ADDRESS", default="https://admin.eventter.kz")
-INTERNAL_EMAIL_DOMAINS = env("INTERNAL_EMAIL_DOMAINS", default=("eventter.kz"))
+WEBSITE_ADDRESS = env("WEBSITE_ADDRESS", default="https://admin.clinic.kz")
+INTERNAL_EMAIL_DOMAINS = env("INTERNAL_EMAIL_DOMAINS", default=("clinic.kz"))
 DRIVER_TUTORIAL_URL = env("DRIVER_TUTORIAL_URL", default="https://youtu.be/wYRxz3-IlE8")
 
 # Backdoor for Apple/Google to verify our app functionality.
-BACKDOOR_EMAIL = env("BACKDOOR_EMAIL", default="demo@eventter.kz")
+BACKDOOR_EMAIL = env("BACKDOOR_EMAIL", default="demo@clinic.kz")
 BACKDOOR_EMAIL_CODE = env("BACKDOOR_EMAIL_CODE", default="4444")
 
 ON_DEMAND_ADDRESS_LIST_LIMIT = env.int("ON_DEMAND_ADDRESS_LIST_LIMIT", default=3)
@@ -255,11 +255,11 @@ ON_DEMAND_TRIP_PAYMENT_MAX_DURATION = env.int(
 )
 
 PAYMENTS_NOTIFICATION_EMAIL = env(
-    "PAYMENTS_NOTIFICATION_EMAIL", default="payments@eventter.kz"
+    "PAYMENTS_NOTIFICATION_EMAIL", default="payments@clinic.kz"
 )
 
 TRIP_SCHEDULE_NOTIFICATION_EMAIL = env(
-    "TRIP_SCHEDULE_NOTIFICATION_EMAIL", default="schedules@eventter.kz"
+    "TRIP_SCHEDULE_NOTIFICATION_EMAIL", default="schedules@clinic.kz"
 )
 
 DEFAULT_MAX_TRIP_DURATION = timedelta(

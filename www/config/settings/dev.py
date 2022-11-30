@@ -1,5 +1,5 @@
 """
-Django development settings for Eventter project.
+Django development settings for clinic project.
 """
 
 import logging
@@ -69,7 +69,7 @@ YANDEX_ROUTER_API_KEY = env(
 
 # --- Kassa.com settings ---
 KASSA_PROJECT_ID = "3508"
-KASSA_PARTNER_EMAIL = "management@eventter.kz"
+KASSA_PARTNER_EMAIL = "management@clinic.kz"
 KASSA_API_KEY = "0F3C884A-9A43-46CE-BA45-BFECF8F6C99A"
 KASSA_NOTIFICATIONS_API_KEY = b"TEST"
 

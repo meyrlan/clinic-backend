@@ -1,5 +1,5 @@
 """
-ASGI config for Eventter project.
+ASGI config for clinic project.
 
 It exposes the ASGI callable as a module-level variable named ``application``.
 """
