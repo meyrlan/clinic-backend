@@ -1,14 +1,14 @@
-from rest_framework.generics import RetrieveUpdateAPIView, RetrieveAPIView, ListAPIView, CreateAPIView, UpdateAPIView
 from rest_framework.permissions import AllowAny
-from api.v2.client.serializers import ProfileSerializer, EventInfoSerializer, EventCreateSerializer, InterestSerializer
+from rest_framework.generics import ListAPIView
 from rest_framework.response import Response
 
+from api.v2.client.serializers import PatientSerializer
+from core.models import Patient
 
 
-# class ProfileAPIView(RetrieveUpdateAPIView):
-#     queryset = Profile.objects.all()
-#     serializer_class = ProfileSerializer
-#     pagination_class = None
-#     permission_classes = [AllowAny]
-
-
+class PatientsListAPIView(ListAPIView):
+    http_method_names = ("get", )
+    permission_classes = (AllowAny, )
+    queryset = Patient.objects.all()
+    serializer_class = PatientSerializer
+    pagination_class = None

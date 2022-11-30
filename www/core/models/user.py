@@ -42,11 +42,11 @@ class User(AbstractBaseUser, PermissionsMixin):
     @property
     def role(self):
         if self.admin:
-            return "admin"
+            return "ADMIN"
         elif self.doctor:
-            return "doctor"
+            return "DOCTOR"
         elif self.patient:
-            return "patient"
+            return "PATIENT"
         return None
 
     class Meta:
