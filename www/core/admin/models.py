@@ -4,6 +4,8 @@ from django.utils.translation import ugettext_lazy as _
 from rest_framework.reverse import reverse
 from django.utils.html import format_html
 
+from core.models.appointment import Appointment
+
 
 @admin.register(User)
 class UserModelAdmin(admin.ModelAdmin):
@@ -68,3 +70,10 @@ class AdminModelAdmin(admin.ModelAdmin):
         "surname",
         "middle_name",
     )
+
+
+@admin.register(Appointment)
+class AppointmentModelAdmin(admin.ModelAdmin):
+    list_display = ("id", "doctor", "patient")
+    search_fields = ("id", "doctor", "patient")
+    fields = ("doctor", "patient", "time")
