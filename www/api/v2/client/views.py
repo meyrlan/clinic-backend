@@ -5,8 +5,9 @@ from rest_framework.generics import ListAPIView, CreateAPIView, RetrieveAPIView,
 from api.v2.client.filters import DoctorFilter
 from api.v2.client.permissions import IsAdminPermission
 from api.v2.client.serializers import PatientInfoSerializer, PatientCreateSerializer, ProfileInfoSerializer, \
-    DoctorInfoSerializer, DoctorCreateSerializer
+    DoctorInfoSerializer, DoctorCreateSerializer, AppointmentInfoSerializer, AppointmentCreateSerializer
 from core.models import Patient, User, Doctor
+from core.models.appointment import Appointment
 
 
 class PatientInfoAPIView(RetrieveAPIView, UpdateAPIView, DestroyAPIView):
@@ -57,3 +58,15 @@ class DoctorsListAPIView(ListAPIView):
 class DoctorsCreateAPIView(CreateAPIView):
     permission_classes = (IsAdminPermission, )
     serializer_class = DoctorCreateSerializer
+
+
+class AppointmentsListAPIView(ListAPIView):
+    permission_classes = (AllowAny, )
+    queryset = Appointment.objects.all()
+    serializer_class = AppointmentInfoSerializer
+    pagination_class = None
+
+
+class AppointmentsCreateAPIView(CreateAPIView):
+    permission_classes = (AllowAny, )
+    serializer_class = AppointmentCreateSerializer

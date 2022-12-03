@@ -17,6 +17,9 @@ class Appointment(models.Model):
     )
     time = models.TimeField(_("Time"))
 
+    def __str__(self):
+        return f"{self.id} - {self.patient.name}, {self.doctor.name}"
+
     class Meta:
         db_table = "appointments"
         verbose_name = _("Appointment")

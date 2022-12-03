@@ -31,6 +31,9 @@ class Patient(models.Model):
     marital_status = models.CharField(_("Marital Status"), max_length=126, choices=MARITAL_STATUS.choices, default=MARITAL_STATUS.SINGLE)
     registration_date = models.DateField(_("Registration Date"), auto_now=True)
 
+    def __str__(self):
+        return f"{self.id} - {self.name} {self.surname}"
+
     class Meta:
         db_table = "patients"
         verbose_name = _("Patient")
