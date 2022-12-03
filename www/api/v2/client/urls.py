@@ -2,7 +2,7 @@ from django.urls import path
 from rest_framework import routers
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
-from api.v2.client.views import PatientsListAPIView, PatientInfoAPIView, PatientsCreateAPIView
+from api.v2.client.views import PatientsListAPIView, PatientInfoAPIView, PatientsCreateAPIView, ProfileAPIView
 
 router = routers.SimpleRouter(trailing_slash=False)
 
@@ -10,7 +10,7 @@ urlpatterns = [
     path('patients', PatientsListAPIView.as_view(), name='patients'),
     path('patients/<int:pk>', PatientInfoAPIView.as_view(), name='patients'),
     path('patients/create', PatientsCreateAPIView.as_view(), name='patients'),
-    # path('profile', ProfileAPIView.as_view(), name='profile'),  # Information about user -> role, name, surname
+    path('profile', ProfileAPIView.as_view(), name='profile'),  # Information about user -> role, name, surname
     # path('doctors', DoctorsListAPIView.as_view(), name='doctors'),
     # path('doctors/<int:pk>', DoctorInfoAPIView.as_view(), name='doctor'),
     # path('doctors/<int:pk>', DoctorUpdateAPIView.as_view(), name='doctor'),

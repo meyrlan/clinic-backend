@@ -83,3 +83,9 @@ class PatientCreateSerializer(serializers.ModelSerializer):
             "phone",
             "password",
         )
+
+
+class ProfileInfoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ("id", "phone", "birth_date", "role")
