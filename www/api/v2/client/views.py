@@ -3,27 +3,20 @@ from rest_framework.generics import ListAPIView, CreateAPIView, RetrieveAPIView,
 from rest_framework.response import Response
 
 from api.v2.client.permissions import IsAdminPermission
-from api.v2.client.serializers import PatientSerializer, PatientCreateSerializer, ProfileInfoSerializer
-from core.models import Patient, User
+from api.v2.client.serializers import PatientInfoSerializer, PatientCreateSerializer, ProfileInfoSerializer
+from core.models import Patient, User, Doctor
 
 
-class PatientsListAPIView(ListAPIView):
+class PatientInfoAPIView(RetrieveAPIView, UpdateAPIView, DestroyAPIView, ListAPIView):
     permission_classes = (AllowAny, )
     queryset = Patient.objects.all()
-    serializer_class = PatientSerializer
-    pagination_class = None
-
-
-class PatientInfoAPIView(RetrieveAPIView, UpdateAPIView, DestroyAPIView):
-    permission_classes = (AllowAny, )
-    queryset = Patient.objects.all()
-    serializer_class = PatientSerializer
+    serializer_class = PatientInfoSerializer
     pagination_class = None
 
 
 class PatientsCreateAPIView(CreateAPIView):
     http_method_names = ("post", )
-    permission_classes = (AllowAny, )
+    permission_classes = (IsAdminPermission, )
     serializer_class = PatientCreateSerializer
 
 
@@ -36,3 +29,10 @@ class ProfileAPIView(RetrieveAPIView):
 
     def get_object(self):
         return self.request.user
+
+
+# class DoctorInfoAPIView(RetrieveAPIView, UpdateAPIView, DestroyAPIView, ListAPIView):
+#     permission_classes = (AllowAny, )
+#     queryset = Doctor.objects.all()
+#     serializer_class = DoctorInfoSerializer
+#     pagination_class = None

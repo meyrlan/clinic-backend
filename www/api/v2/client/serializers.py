@@ -8,12 +8,12 @@ from django.db import transaction
 from django.utils.translation import ugettext_lazy as _
 from rest_framework.exceptions import ValidationError
 
-from core.models import Patient, User
+from core.models import Patient, User, Doctor
 
 logger = logging.getLogger(__name__)
 
 
-class PatientSerializer(serializers.ModelSerializer):
+class PatientInfoSerializer(serializers.ModelSerializer):
     registration_date = serializers.DateField(read_only=True)
     phone = PhoneNumberField(source="user.phone")
     birth_date = serializers.DateField(source="user.birth_date")
@@ -89,3 +89,8 @@ class ProfileInfoSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ("id", "phone", "birth_date", "role")
+
+
+# class DoctorInfoSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = Doctor

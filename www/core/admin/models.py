@@ -20,6 +20,7 @@ class PatientModelAdmin(admin.ModelAdmin):
     fields = (
         "user",
         "iin_number",
+        "id_number",
         "name",
         "surname",
         "middle_name",
