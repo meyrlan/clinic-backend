@@ -42,6 +42,9 @@ class Doctor(models.Model):
     address = models.CharField(_("Address"), max_length=256)
     homepage_url = models.CharField(_("Homepage URL"), max_length=256, blank=True)
 
+    def __str__(self):
+        return f"{self.id} - {self.name} {self.surname}"
+
     class Meta:
         db_table = "doctors"
         verbose_name = _("Doctor")

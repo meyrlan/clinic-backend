@@ -9,6 +9,7 @@ from django.utils.translation import ugettext_lazy as _
 from rest_framework.exceptions import ValidationError
 
 from core.models import Patient, User, Doctor
+from core.models.appointment import Appointment
 
 logger = logging.getLogger(__name__)
 
@@ -205,3 +206,33 @@ class DoctorInfoSerializer(serializers.ModelSerializer):
             "phone",
             "birth_date",
         )
+
+
+class AppointmentInfoSerializer(serializers.ModelSerializer):
+    doctor = DoctorInfoSerializer()
+    patient = PatientInfoSerializer()
+
+    class Meta:
+        model = Appointment
+        fields = (
+            "doctor",
+            "patient",
+            "time",
+        )
+
+
+class AppointmentCreateSerializer(serializers.ModelSerializer):
+    doctor_id = serializers.PrimaryKeyRelatedField(
+        many=False,
+        queryset=Doctor.objects.all(),
+        source="doctor",
+    )
+    patient_id = serializers.PrimaryKeyRelatedField(
+        many=False,
+        queryset=Patient.objects.all(),
+        source="patient",
+    )
+
+    class Meta:
+        model = Appointment
+        fields = ("doctor_id", "patient_id", "time")
