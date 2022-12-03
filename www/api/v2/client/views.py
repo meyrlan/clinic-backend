@@ -29,7 +29,7 @@ class PatientsCreateAPIView(CreateAPIView):
 
 class ProfileAPIView(RetrieveAPIView):
     http_method_names = ("get", )
-    permission_classes = (AllowAny, )
+    permission_classes = (IsAuthenticated, )
     queryset = User.objects.all()
     serializer_class = ProfileInfoSerializer
     pagination_class = None
