@@ -13,11 +13,11 @@ git pull
 tag=$(git describe --abbrev=0 --tags)
 git checkout $tag
 ecr_prefix="057506459946.dkr.ecr.eu-central-1.amazonaws.com"
-container_tag="$ecr_prefix/eventter:$tag"
+container_tag="$ecr_prefix/clinic:$tag"
 
 # 3. Check, whether it exists in ECR.
 aws ecr get-login-password --region eu-central-1 | docker login --username AWS --password-stdin "$ecr_prefix"
-aws ecr describe-images --repository-name="eventter" --image-ids="imageTag=$tag"
+aws ecr describe-images --repository-name="clinic" --image-ids="imageTag=$tag"
 if [ $? == 0 ]; then
     echo "The tag $tag is in use in ECR!"
     exit 1
