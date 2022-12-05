@@ -145,31 +145,31 @@ class ProfileInfoSerializer(serializers.ModelSerializer):
     surname = serializers.SerializerMethodField()
     middle_name = serializers.SerializerMethodField()
 
-    def get_name(self):
-        if self.doctor:
-            return self.doctor.name
-        elif self.admin:
-            return self.admin.name
-        elif self.patient:
-            return self.patient.name
+    def get_name(self, user):
+        if user.doctor:
+            return user.doctor.name
+        elif user.admin:
+            return user.admin.name
+        elif user.patient:
+            return user.patient.name
         return None
 
-    def get_surname(self):
-        if self.doctor:
-            return self.doctor.surname
-        elif self.admin:
-            return self.admin.surname
-        elif self.patient:
-            return self.patient.surname
+    def get_surname(self, user):
+        if user.doctor:
+            return user.doctor.surname
+        elif user.admin:
+            return user.admin.surname
+        elif user.patient:
+            return user.patient.surname
         return None
 
-    def get_middle_name(self):
-        if self.doctor:
-            return self.doctor.middle_name
-        elif self.admin:
-            return self.admin.middle_name
-        elif self.patient:
-            return self.patient.middle_name
+    def get_middle_name(self, user):
+        if user.doctor:
+            return user.doctor.middle_name
+        elif user.admin:
+            return user.admin.middle_name
+        elif user.patient:
+            return user.patient.middle_name
         return None
 
     class Meta:
