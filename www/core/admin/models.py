@@ -11,7 +11,7 @@ from core.models.appointment import Appointment
 class UserModelAdmin(admin.ModelAdmin):
     list_display = ("id", "phone", "birth_date")
     search_fields = ("id", "phone")
-    fields = ("phone", "birth_date", "password")
+    fields = ("phone", "birth_date")
 
 
 @admin.register(Patient)
