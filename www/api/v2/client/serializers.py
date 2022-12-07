@@ -134,6 +134,8 @@ class DoctorCreateSerializer(serializers.ModelSerializer):
             "registration_date",
             "phone",
             "birth_date",
+            "department",
+            "specialization",
             "password",
         )
 
