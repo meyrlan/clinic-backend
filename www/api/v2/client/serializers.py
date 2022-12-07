@@ -8,8 +8,7 @@ from django.db import transaction
 from django.utils.translation import ugettext_lazy as _
 from rest_framework.exceptions import ValidationError
 
-from core.models import Patient, User, Doctor
-from core.models.appointment import Appointment
+from core.models import Patient, User, Doctor, Appointment, Department, Specialization
 
 logger = logging.getLogger(__name__)
 
@@ -122,8 +121,7 @@ class DoctorCreateSerializer(serializers.ModelSerializer):
             "name",
             "surname",
             "middle_name",
-            "department_id",
-            "specialization_details_id",
+            "specialization",
             "experience_years",
             "photo",
             "category",
@@ -144,33 +142,37 @@ class ProfileInfoSerializer(serializers.ModelSerializer):
     name = serializers.SerializerMethodField()
     surname = serializers.SerializerMethodField()
     middle_name = serializers.SerializerMethodField()
+    role = serializers.SerializerMethodField()
 
     def get_name(self, user):
-        if user.doctor:
+        if hasattr(user, "doctor"):
             return user.doctor.name
-        elif user.admin:
+        elif hasattr(user, "admin"):
             return user.admin.name
-        elif user.patient:
+        elif hasattr(user, "patient"):
             return user.patient.name
         return None
 
     def get_surname(self, user):
-        if user.doctor:
+        if hasattr(user, "doctor"):
             return user.doctor.surname
-        elif user.admin:
+        elif hasattr(user, "admin"):
             return user.admin.surname
-        elif user.patient:
+        elif hasattr(user, "patient"):
             return user.patient.surname
         return None
 
     def get_middle_name(self, user):
-        if user.doctor:
+        if hasattr(user, "doctor"):
             return user.doctor.middle_name
-        elif user.admin:
+        elif hasattr(user, "admin"):
             return user.admin.middle_name
-        elif user.patient:
+        elif hasattr(user, "patient"):
             return user.patient.middle_name
         return None
+
+    def get_role(self, user):
+        return user.role
 
     class Meta:
         model = User
@@ -191,8 +193,7 @@ class DoctorInfoSerializer(serializers.ModelSerializer):
             "name",
             "surname",
             "middle_name",
-            "department_id",
-            "specialization_details_id",
+            "specialization",
             "experience_years",
             "photo",
             "category",
@@ -236,3 +237,19 @@ class AppointmentCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Appointment
         fields = ("doctor_id", "patient_id", "time")
+
+
+class DepartmentInfoSerializer(serializers.ModelSerializer):
+    doctors = DoctorInfoSerializer(many=True)
+
+    class Meta:
+        model = Department
+        fields = ("id", "name", "doctors")
+
+
+class SpecializationInfoSerializer(serializers.ModelSerializer):
+    doctors = DoctorInfoSerializer(many=True)
+
+    class Meta:
+        model = Specialization
+        fields = ("id", "name", "doctors")

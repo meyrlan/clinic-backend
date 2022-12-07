@@ -2,12 +2,11 @@ from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.generics import ListAPIView, CreateAPIView, RetrieveAPIView, UpdateAPIView, DestroyAPIView
 
-from api.v2.client.filters import DoctorFilter
 from api.v2.client.permissions import IsAdminPermission
 from api.v2.client.serializers import PatientInfoSerializer, PatientCreateSerializer, ProfileInfoSerializer, \
-    DoctorInfoSerializer, DoctorCreateSerializer, AppointmentInfoSerializer, AppointmentCreateSerializer
-from core.models import Patient, User, Doctor
-from core.models.appointment import Appointment
+    DoctorInfoSerializer, DoctorCreateSerializer, AppointmentInfoSerializer, AppointmentCreateSerializer, DepartmentInfoSerializer, SpecializationInfoSerializer
+from core.models import Patient, User, Doctor, Appointment, Department, Specialization
+from api.v2.client.filters import DoctorFilter
 
 
 class PatientInfoAPIView(RetrieveAPIView, UpdateAPIView, DestroyAPIView):
@@ -47,10 +46,10 @@ class DoctorInfoAPIView(RetrieveAPIView, UpdateAPIView, DestroyAPIView, ListAPIV
 
 
 class DoctorsListAPIView(ListAPIView):
-    filter_backends = (DjangoFilterBackend, )
-    filter_class = DoctorFilter
     permission_classes = (AllowAny, )
     queryset = Doctor.objects.all()
+    filter_backends = (DjangoFilterBackend, )
+    filter_class = DoctorFilter
     serializer_class = DoctorInfoSerializer
     pagination_class = None
 
@@ -70,3 +69,17 @@ class AppointmentsListAPIView(ListAPIView):
 class AppointmentsCreateAPIView(CreateAPIView):
     permission_classes = (AllowAny, )
     serializer_class = AppointmentCreateSerializer
+
+
+class DepartmentsListAPIView(ListAPIView):
+    permission_classes = (AllowAny, )
+    queryset = Department.objects.all()
+    serializer_class = DepartmentInfoSerializer
+    pagination_class = None
+
+
+class SpecializationsListAPIView(ListAPIView):
+    permission_classes = (AllowAny, )
+    queryset = Specialization.objects.all()
+    serializer_class = SpecializationInfoSerializer
+    pagination_class = None

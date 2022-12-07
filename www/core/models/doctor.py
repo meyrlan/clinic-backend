@@ -14,14 +14,24 @@ class Doctor(models.Model):
         null=True,
         blank=True,
     )
+    department = models.ForeignKey(
+        "core.Department",
+        verbose_name=_("Department"),
+        on_delete=models.PROTECT,
+        related_name="doctors",
+    )
+    specialization = models.ForeignKey(
+        "core.Specialization",
+        verbose_name=_("Specialization"),
+        on_delete=models.PROTECT,
+        related_name="doctors",
+    )
 
     iin_number = models.CharField(_("IIN Number"), max_length=12)
     id_number = models.CharField(_("ID Number"), max_length=20)
     name = models.CharField(_("Name"), max_length=128)
     surname = models.CharField(_("Surname"), max_length=128)
     middle_name = models.CharField(_("Middle Name"), max_length=128, blank=True)
-    department_id = models.PositiveIntegerField(_("Department ID"))
-    specialization_details_id = models.PositiveIntegerField(_("Specialization Details ID"))
     experience_years = models.IntegerField(_("Experience Years"))
     photo = ProcessedImageField(
         verbose_name=_("Photo"),

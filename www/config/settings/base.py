@@ -88,7 +88,7 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-CORS_ALLOW_ALL_ORIGINS = True # If this is used then `CORS_ALLOWED_ORIGINS` will not have any effect
+CORS_ALLOW_ALL_ORIGINS = True  # If this is used then `CORS_ALLOWED_ORIGINS` will not have any effect
 CORS_ALLOW_CREDENTIALS = True
 
 # --- Django REST Framework settings ---
@@ -125,6 +125,12 @@ SPECTACULAR_SETTINGS = {
         {"url": "https://api.clinic.kz", "description": "Production server"},
         {"url": "http://127.0.0.1:8000", "description": "Development server"},
     ],
+}
+
+JWT_AUTH = {
+    'JWT_EXPIRATION_DELTA': timedelta(days=2),
+    'JWT_ALLOW_REFRESH': True,
+    'JWT_REFRESH_EXPIRATION_DELTA': timedelta(days=7),
 }
 
 TEMPLATES_DIR = BASE_DIR / "templates"

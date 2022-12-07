@@ -41,11 +41,11 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     @property
     def role(self):
-        if self.admin:
+        if hasattr(self, 'admin'):
             return "ADMIN"
-        elif self.doctor:
+        elif hasattr(self, 'doctor'):
             return "DOCTOR"
-        elif self.patient:
+        elif hasattr(self, 'patient'):
             return "PATIENT"
         return None
 
