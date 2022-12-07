@@ -24,7 +24,7 @@ class PatientsListAPIView(ListAPIView):
 
 
 class PatientsCreateAPIView(CreateAPIView):
-    permission_classes = (IsAdminPermission, )
+    permission_classes = (AllowAny, )
     serializer_class = PatientCreateSerializer
 
 

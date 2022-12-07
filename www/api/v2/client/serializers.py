@@ -225,16 +225,22 @@ class AppointmentInfoSerializer(serializers.ModelSerializer):
 
 
 class AppointmentCreateSerializer(serializers.ModelSerializer):
-    doctor_id = serializers.PrimaryKeyRelatedField(
-        many=False,
-        queryset=Doctor.objects.all(),
-        source="doctor",
-    )
-    patient_id = serializers.PrimaryKeyRelatedField(
-        many=False,
-        queryset=Patient.objects.all(),
-        source="patient",
-    )
+    doctor_id = serializers.IntegerField(write_only=True)
+    patient_id = serializers.IntegerField(write_only=True)
+
+    @transaction.atomic
+    def create(self, validated_data):
+        doctor_user = User.objects.filter(id=validated_data["doctor_id"]).first()
+        patient_user = User.objects.filter(id=validated_data["patient_id"]).first()
+
+        if not hasattr(doctor_user, "doctor"):
+            raise ValidationError({"error": f"User with ID {validated_data['doctor_id']} doesn't exist"})
+        if not hasattr(patient_user, "patient"):
+            raise ValidationError({"error": f"User with ID {validated_data['patient_id']} doesn't exist"})
+
+        validated_data["doctor_id"] = doctor_user.doctor.id
+        validated_data["patient_id"] = patient_user.patient.id
+        return super().create(validated_data)
 
     class Meta:
         model = Appointment
