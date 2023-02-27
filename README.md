@@ -6,3 +6,5 @@
 4. python manage.py runserver
 
 Enjoy!
+
+Frontend repository: https://github.com/Abyl10/aibolite_front
